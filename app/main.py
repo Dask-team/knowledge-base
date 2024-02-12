@@ -21,7 +21,7 @@ app.add_middleware(
 
 @app.exception_handler(Exception)
 async def validation_exception_handler(request, exc):
-    raise HTTPException(status_code=500, detail=str(exc))
+    return {"error_detail": str(exc)}
 
 
 @app.get("/")
