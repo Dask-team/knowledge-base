@@ -1,8 +1,9 @@
 from typing import List, Optional
 
 from elasticsearch import Elasticsearch
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
 from app.keyword import extract_keywords
@@ -20,8 +21,11 @@ app.add_middleware(
 
 
 @app.exception_handler(Exception)
-async def validation_exception_handler(request, exc):
-    return {"error_detail": str(exc)}
+async def error_handler(request, exc):
+    return JSONResponse(
+        status_code=500,
+        content={"message": f"{exc}"}
+    )
 
 
 @app.get("/")
