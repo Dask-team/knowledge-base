@@ -5,6 +5,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
+from app.keyword import extract_keywords
+
 app = FastAPI("DasKnB API")
 es = Elasticsearch("http://localhost:9200")
 
@@ -92,6 +94,12 @@ class Document(BaseModel):
     tags: Optional[List[str]] = []
 
 
+@app.post("/extract-keywords/")
+def extract_keywords(document: Document):
+    """Extract keywords extract_keywords"""
+    return extract_keywords(document.content)
+
+
 @app.post("/{collection_name}")
 def create_document(collection_name: str, document: Document):
     """Create a new document in a collection"""
@@ -113,7 +121,7 @@ def delete_document(collection_name: str, document_id: str):
     return res
 
 
-@app.get("/{collection_name}/search")
+@app.get("/{collection_name}/_search")
 def search_documents(collection_name: str, query: str):
     """Search documents in a collection"""
     res = es.search(index=collection_name, body={"query": {"match": {"content": query}}})
