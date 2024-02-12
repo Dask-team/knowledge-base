@@ -104,13 +104,13 @@ class Document(BaseModel):
 
 
 class SomeWeirdPayload(BaseModel):
-    blahblahblah: str
+    body: str
 
 
 @app.post("/extract-keywords/")
-def extract_keywords(content: SomeWeirdPayload):
+def extract_keywords(something: SomeWeirdPayload):
     """Extract keywords extract_keywords"""
-    return extract_keywords(content.blahblahblah)
+    return extract_keywords(something.body)
 
 
 @app.post("/{collection_name}")
