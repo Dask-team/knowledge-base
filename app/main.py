@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 
 from elasticsearch import Elasticsearch
 from fastapi import FastAPI
@@ -90,6 +90,13 @@ def get_collection(collection_name: str):
     return res["hits"]["hits"]
 
 
+@app.get("/{collection_name}/_search")
+def search_documents(collection_name: str, query: str):
+    """Search documents in a collection"""
+    res = es.search(index=collection_name, body={"query": {"match": {"content": query}}})
+    return res["hits"]["hits"]
+
+
 @app.get("/{collection_name}/{document_id}")
 def get_document(collection_name: str, document_id: str):
     """Get a document by its id"""
@@ -132,13 +139,6 @@ def delete_document(collection_name: str, document_id: str):
     """Delete a document by its id"""
     res = es.delete(index=collection_name, id=document_id)
     return res
-
-
-@app.get("/{collection_name}/_search")
-def search_documents(collection_name: str, query: str):
-    """Search documents in a collection"""
-    res = es.search(index=collection_name, body={"query": {"match": {"content": query}}})
-    return res["hits"]["hits"]
 
 
 @app.get("/{collection_name}/tags/{tag}")
