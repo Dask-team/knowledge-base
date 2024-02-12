@@ -30,8 +30,8 @@ async def error_handler(request, exc):
 
 @app.get("/")
 def collections():
-    """Get all collections"""
-    res = es.cat.indices(format="json")
+    """Get all collections(indexes) in the Elasticsearch server"""
+    res = es.cat.indices(h="index", format="json")
     return [index["index"] for index in res]
 
 
