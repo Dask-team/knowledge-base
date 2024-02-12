@@ -100,7 +100,7 @@ def get_document(collection_name: str, document_id: str):
 class Document(BaseModel):
     title: str
     content: str
-    tags: Optional[List[str]] = None
+    tags: Optional[list] = None
 
 
 class Content(BaseModel):
