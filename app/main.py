@@ -103,14 +103,14 @@ class Document(BaseModel):
     tags: Optional[List[str]] = []
 
 
-class Content(BaseModel):
+class SomeWeirdPayload(BaseModel):
     text: str
 
 
 @app.post("/extract-keywords/")
-def extract_keywords(content: Content):
+def extract_keywords(content: SomeWeirdPayload):
     """Extract keywords extract_keywords"""
-    return extract_keywords(content)
+    return extract_keywords(content.text)
 
 
 @app.post("/{collection_name}")
