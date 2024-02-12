@@ -1,7 +1,7 @@
 from typing import List, Optional
 
 from elasticsearch import Elasticsearch
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
@@ -17,6 +17,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.exception_handler(Exception)
+async def validation_exception_handler(request, exc):
+    raise HTTPException(status_code=500, detail=str(exc))
 
 
 @app.get("/")
