@@ -8,7 +8,7 @@ from pydantic import BaseModel
 from app.keyword import extract_keywords
 
 app = FastAPI(title="DasKnB API")
-es = Elasticsearch("http://localhost:9200")
+es = Elasticsearch("http://localhost:9200/")
 
 app.add_middleware(
     CORSMiddleware,
