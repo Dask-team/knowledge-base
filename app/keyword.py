@@ -5,7 +5,7 @@ from openai import OpenAI
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 
-def extract_keywords(body):
+def extract_keywords(text):
     response = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
@@ -24,7 +24,7 @@ def extract_keywords(body):
             },
             {
                 "role": "user",
-                "content": body
+                "content": text
             }
         ]
     )
