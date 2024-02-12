@@ -110,7 +110,7 @@ class Content(BaseModel):
 @app.post("/extract-keywords/")
 def extract_keywords(content: Content):
     """Extract keywords extract_keywords"""
-    print(content)
+    print(type(content.content))
     return extract_keywords(str(content.content))
 
 
