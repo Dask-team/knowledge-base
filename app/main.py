@@ -35,6 +35,13 @@ def collections():
     return [index["index"] for index in res]
 
 
+@app.delete("/")
+def delete_all_collections():
+    """Delete all collections(indexes) in the Elasticsearch server"""
+    res = es.indices.delete(index="*")
+    return res
+
+
 @app.post("/{collection_name}/_create")
 def create_collection(collection_name: str):
     """Create a new collection"""
