@@ -13,7 +13,7 @@ es = Elasticsearch("http://localhost:9200/")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["http://localhost:5173", "https://dasknb-frontend.pages.dev"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -53,14 +53,11 @@ def create_collection(collection_name: str):
         },
         "mappings": {
             "properties": {
-                "uuid": {
-                    "type": "keyword"
-                },
                 "title": {
                     "type": "text",
                     "analyzer": "korean_analyzer"
                 },
-                "body": {
+                "content": {
                     "type": "text",
                     "analyzer": "korean_analyzer"
                 },
